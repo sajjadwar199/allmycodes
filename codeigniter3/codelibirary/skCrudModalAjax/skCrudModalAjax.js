@@ -86,15 +86,15 @@
  						$('#password').val("");
  						$('#username').val("");
  						$("#" + btn_add_id).removeAttr("disabled");
- 						var dataResult = JSON.parse(dataResult);
- 						if (dataResult.statusCode == 200) {
- 							// $("#"+form_id).find('input:text').val('');
- 							$("#" + success_div_id).html(dataResult);
- 						} else if (dataResult.statusCode == 201) {
- 							alert
- 								(messages.error);
- 						}
- 					}
+ 						// var dataResult = JSON.parse(dataResult);
+ 						 
+ 					},
+					 error:function(dataResult){
+						alert
+						(messages.error);
+						$("#" + btn_add_id).removeAttr("disabled");
+
+					 }
  				});
  			}
  			//     else {
@@ -137,14 +137,14 @@
  					$('#' + edit_modal_id).modal('hide');
 
  					$("#" + edit_add_id).removeAttr("disabled");
- 					var dataResult = JSON.parse(dataResult);
- 					if (dataResult.statusCode == 200) {
- 						$("#" + success_div_id).html(dataResult);
- 					} else if (dataResult.statusCode == 201) {
- 						alert
- 							(messages.error);
- 					}
- 				}
+ 					// var dataResult = JSON.parse(dataResult);
+ 					 
+ 				}, error:function(dataResult){
+					alert
+					(messages.error);
+					$("#" + edit_add_id).removeAttr("disabled");
+
+				 }
  			});
  		}
  		//     else {
@@ -176,7 +176,10 @@ confirmdelete:"هل أنت متأكد من الحذف"
 
 					$('#' + table_id).DataTable().destroy();
 					serverSide_datatable(showdata_url, table_id);
- 				  }  
+ 				  }  , error:function(dataResult){
+					alert
+					(messages.error);
+				 }
 			 });  
 		}  
 		else  

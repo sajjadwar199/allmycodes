@@ -10,7 +10,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 class skCrudModalAjax  extends CI_Controller
 {
-     public   $ModelClassName = "manageUsersModel";
+    public   $ModelClassName = "manageUsersModel";
     public   $validation = array(
         array(
             'field' => 'username',
@@ -84,9 +84,14 @@ class skCrudModalAjax  extends CI_Controller
         if ($this->form_validation->run() != false) {
             // insert 
             $res = $this->ModelName->insert($data);
-            json_encode($res);
+            if ($res) {
+                header('Content-Type: application/json');
+                echo json_encode(['status' => "success"]);
+            }
         } else {
-            echo json_encode(['success' => false]);
+            http_response_code(412);
+            header('Content-Type: application/json');
+            echo json_encode(['status' => "error"]);
         }
     }
     /**
@@ -117,9 +122,22 @@ class skCrudModalAjax  extends CI_Controller
             "password" => $this->input->post("password"),
             "validity" => $this->input->post("validity")
         );
+        $this->form_validation->set_rules($this->validation);
+
+        if ($this->form_validation->run() != false) {
+
         $res = $this->ModelName->update($data);
-        json_encode($res);
-        echo $this->input->post("id");
+        if ($res) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => "success"]);
+        }
+        }else {
+            http_response_code(412);
+            header('Content-Type: application/json');
+            echo json_encode(['status' => "error"]);
+        }
+        // json_encode($res);
+        // echo $this->input->post("id");
     }
     /**
      * delete لحذف البيانات
@@ -128,10 +146,20 @@ class skCrudModalAjax  extends CI_Controller
      * @return void
      */
     public function delete()
-    { 
-        $id=$this->input->post("id");
+    {
+        $id = $this->input->post("id");
         $delet = $this->ModelName->delete($id);
-        echo json_encode($delet);
+        // echo json_encode($delet);
+        if($delet){
+            header('Content-Type: application/json');
+            echo json_encode(['status' => "success"]);
+        }else{
+            http_response_code(412);
+            header('Content-Type: application/json');
+
+            echo json_encode(['status' => "error"]);
+
+        }
     }
     /**
      * show لعرض البيانات 
