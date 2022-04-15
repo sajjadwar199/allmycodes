@@ -89,9 +89,10 @@ class skCrudModalAjax  extends CI_Controller
                 echo json_encode(['status' => "success"]);
             }
         } else {
-            http_response_code(412);
-            header('Content-Type: application/json');
-            echo json_encode(['status' => "error"]);
+             // http_response_code(412);
+             header('Content-Type: application/json');
+             echo validation_errors();
+         //   echo json_encode(['status' => "error"]);
         }
     }
     /**
@@ -132,9 +133,12 @@ class skCrudModalAjax  extends CI_Controller
             echo json_encode(['status' => "success"]);
         }
         }else {
-            http_response_code(412);
-            header('Content-Type: application/json');
-            echo json_encode(['status' => "error"]);
+              //     http_response_code(412);
+        //    header('Content-Type: application/json');
+        //    echo json_encode(['status' => "error"]);
+        header('Content-Type: application/json');
+
+        echo validation_errors();
         }
         // json_encode($res);
         // echo $this->input->post("id");
