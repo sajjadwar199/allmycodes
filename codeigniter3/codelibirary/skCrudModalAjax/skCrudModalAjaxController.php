@@ -37,13 +37,8 @@ class skCrudModalAjax  extends CI_Controller
             ),
         )
     );
-    public function __construct()
-    {
-        parent::__construct();
-        // import model 
-        $this->load->model($this->ModelClassName, "ModelName");
-        $this->load->library('form_validation');
-    }
+  
+    //لعمل عرض البيانات 
     public function set_show_data($r)
     {
         return  array(
@@ -54,18 +49,42 @@ class skCrudModalAjax  extends CI_Controller
             "<a  class='btn btn-danger delete_btn' id=" .  $r->id . ">حذف</a>",
         );
     }
+    //لعمل مدخلات المرسلة للتحديث
+    public function set_update_post()
+    {
+        return  array(
+            "id" => $this->input->post("id"),
+            "username" => $this->input->post("username"),
+            "password" => $this->input->post("password"),
+            "validity" => $this->input->post("validity")
+        );
+    }
+    //لعمل مدخلات المرسلة للاضافة
+    public function set_insert_post()
+    {
+        return  array(
+            "username" => $this->input->post("username"),
+            "password" => $this->input->post("password"),
+            "validity" => $this->input->post("validity")
+        );
+    }
 
-
-
-
-
-    /* setting end *******************************************8 */
     public function index()
     {
         $this->load->view("dashbord_inc/header.php");
         $this->load->view("pages/importExcel.php");
         $this->load->view("dashbord_inc/footer.php");
     }
+
+    /* setting end *******************************************8 */
+    public function __construct()
+    {
+        parent::__construct();
+        // import model 
+        $this->load->model($this->ModelClassName, "ModelName");
+        $this->load->library('form_validation');
+    }
+  
     /**
      * insert لأضافة البيانات 
      *
@@ -74,25 +93,15 @@ class skCrudModalAjax  extends CI_Controller
     public function insert()
     {
         // set data
-        $data = array(
-            "username" => $this->input->post("username"),
-            "password" => $this->input->post("password"),
-            "validity" => $this->input->post("validity")
-        );
+        $data = $this->set_insert_post();
         //validation 
         $this->form_validation->set_rules($this->validation);
         if ($this->form_validation->run() != false) {
             // insert 
             $res = $this->ModelName->insert($data);
-            if ($res) {
-                header('Content-Type: application/json');
-                echo json_encode(['status' => "success"]);
-            }
+            json_encode($res);
         } else {
-             // http_response_code(412);
-             header('Content-Type: application/json');
-             echo validation_errors();
-         //   echo json_encode(['status' => "error"]);
+            echo json_encode(['success' => false]);
         }
     }
     /**
@@ -117,31 +126,10 @@ class skCrudModalAjax  extends CI_Controller
      */
     public function update()
     {
-        $data = array(
-            "id" => $this->input->post("id"),
-            "username" => $this->input->post("username"),
-            "password" => $this->input->post("password"),
-            "validity" => $this->input->post("validity")
-        );
-        $this->form_validation->set_rules($this->validation);
-
-        if ($this->form_validation->run() != false) {
-
+        $data = $this->set_update_post();
         $res = $this->ModelName->update($data);
-        if ($res) {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => "success"]);
-        }
-        }else {
-              //     http_response_code(412);
-        //    header('Content-Type: application/json');
-        //    echo json_encode(['status' => "error"]);
-        header('Content-Type: application/json');
-
-        echo validation_errors();
-        }
-        // json_encode($res);
-        // echo $this->input->post("id");
+        json_encode($res);
+        echo $this->input->post("id");
     }
     /**
      * delete لحذف البيانات
@@ -153,17 +141,7 @@ class skCrudModalAjax  extends CI_Controller
     {
         $id = $this->input->post("id");
         $delet = $this->ModelName->delete($id);
-        // echo json_encode($delet);
-        if($delet){
-            header('Content-Type: application/json');
-            echo json_encode(['status' => "success"]);
-        }else{
-            http_response_code(412);
-            header('Content-Type: application/json');
-
-            echo json_encode(['status' => "error"]);
-
-        }
+        echo json_encode($delet);
     }
     /**
      * show لعرض البيانات 
