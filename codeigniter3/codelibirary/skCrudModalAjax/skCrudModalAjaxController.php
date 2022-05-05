@@ -97,12 +97,18 @@ class skCrudModalAjax  extends CI_Controller
         //validation 
         $this->form_validation->set_rules($this->validation);
         if ($this->form_validation->run() != false) {
-            // insert 
-            $res = $this->ModelName->insert($data);
-            json_encode($res);
-        } else {
-            echo json_encode(['success' => false]);
-        }
+             // insert 
+             $res = $this->ModelName->insert($data);
+             if ($res) {
+                 header('Content-Type: application/json');
+                 echo json_encode(['status' => "success"]);
+             } 
+         }else { 
+             // http_response_code(412);
+             header('Content-Type: application/json');
+             echo validation_errors();
+         //   echo json_encode(['status' => "error"]);
+         }
     }
     /**
      * edit    لعرض العنصر المراد تعديله
@@ -127,9 +133,25 @@ class skCrudModalAjax  extends CI_Controller
     public function update()
     {
         $data = $this->set_update_post();
+        $this->form_validation->set_rules($this->validation);
+
+        if ($this->form_validation->run() != false) {
+
         $res = $this->ModelName->update($data);
-        json_encode($res);
-        echo $this->input->post("id");
+        if ($res) {
+            header('Content-Type: application/json');
+            echo json_encode(['status' => "success"]);
+        }
+        }else {
+        //     http_response_code(412);
+        //    header('Content-Type: application/json');
+        //    echo json_encode(['status' => "error"]);
+        header('Content-Type: application/json');
+
+        echo validation_errors();
+       }
+        // json_encode($res);
+        // echo $this->input->post("id");
     }
     /**
      * delete لحذف البيانات
@@ -141,7 +163,16 @@ class skCrudModalAjax  extends CI_Controller
     {
         $id = $this->input->post("id");
         $delet = $this->ModelName->delete($id);
-        echo json_encode($delet);
+        if($delet){
+            header('Content-Type: application/json');
+            echo json_encode(['status' => "success"]);
+        }else{
+            http_response_code(412);
+            header('Content-Type: application/json');
+
+            echo json_encode(['status' => "error"]);
+
+        }
     }
     /**
      * show لعرض البيانات 
