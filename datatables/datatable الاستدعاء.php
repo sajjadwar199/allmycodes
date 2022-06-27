@@ -8,6 +8,7 @@
 <link type="text/css" href="<?php echo base_url() . 'template/'; ?>plugins/datatables/jquery.dataTables.min.css">
 <link type="text/css" href="<?php echo base_url() . 'template/'; ?>plugins/datatables/responsive.bootstrap.min.css">
 <link type="text/css" href="<?php echo base_url() . 'template/'; ?>plugins/datatables/scroller.bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo   base_url() . 'template/'; ?>vendor/toastr/toastr.css">
 
 </script>
 <!--jquery-->
@@ -31,4 +32,5 @@
 <script src="<?php echo   base_url() . 'template/'; ?>plugins/datatables/dataTables.responsive.min.js"></script>
 <script src="<?php echo   base_url() . 'template/'; ?>plugins/datatables/responsive.bootstrap.min.js"></script>
 <script src="<?php echo   base_url() . 'template/'; ?>plugins/datatables/dataTables.scroller.min.js"></script> 
-<script src="<?php echo base_url() . 'template/'; ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="<?php echo base_url() . 'template/'; ?>vendor/datatables/dataTables.bootstrap4.js"></script>
+<script src="<?php echo   base_url() . 'template/'; ?>plugins/toastr/toastr.min.js"></script>
