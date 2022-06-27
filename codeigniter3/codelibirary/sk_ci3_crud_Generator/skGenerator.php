@@ -1,4 +1,4 @@
-
+ 
 <?php
  /* 
  مثال للاستدعاء 
@@ -318,8 +318,8 @@ class  skGenerator  extends CI_Controller
     $validation = " return array(
           array(";
     foreach ($validation_data as $key => $value) {
-      $validation .= "'field' =>" . "' $key '" . "," . "\n";
-      $validation .= "'rules' =>"  . "' $value'" . "," . "\n";
+      $validation .= "'field' =>" . "'$key'" . "," . "\n";
+      $validation .= "'rules' =>"  . "'$value'" . "," . "\n";
 
       $validation .= "'errors' => array(
         'required' => 'الرجاء ملء حقل %s.',
@@ -359,7 +359,7 @@ class  skGenerator  extends CI_Controller
     $update_feilds = "";
     foreach ($update_feilds_data as $feilds) {
       if ($feilds == "date") {
-        $update_feilds .= "      " . "'date'" . '=> $this->input->post' . '(' . "date('Y/m/d')" . '),' . "\n";
+        $update_feilds .=  "      " . "'date'" . '=>  '   . "date('Y/m/d')" . ',' . "\n";
       } else {
         $update_feilds .= "      " . "'$feilds'" . '=> $this->input->post' . '(' . "'$feilds'" . '),' . "\n";
       }

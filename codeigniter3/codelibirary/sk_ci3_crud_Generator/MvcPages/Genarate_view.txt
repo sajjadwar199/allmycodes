@@ -140,7 +140,7 @@
  	serverSide_datatable("@ControllerName@/list", "datatable_crud");
  	insertData("modelId", "@ControllerName@/insert", "save", "@ControllerName@/list", "datatable_crud");
  	deleteData("@ControllerName@/delete", "@ControllerName@/list", "datatable_crud");
- 	updateData("modal-edit-id", "Categories/update", "edit", "@ControllerName@/list", "datatable_crud");
+ 	updateData("modal-edit-id", "@ControllerName@/update", "edit", "@ControllerName@/list", "datatable_crud");
 		/*  for showing data after edit */
  	edit("@ControllerName@/edit", "modal-edit-id", "edit", @generate_js_edit_showing_form@);
  </script>
