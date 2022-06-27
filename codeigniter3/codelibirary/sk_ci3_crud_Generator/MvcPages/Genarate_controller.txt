@@ -1,0 +1,52 @@
+<?php
+/**
+*  @generateTime
+*  class by sajjad kareem
+*/
+include  'application/libraries/sk_generator_core_files/skCrudModalAjax.php ';
+class @controllerName extends skCrudModalAjax
+{
+    public   $ModelClassName = "@ModelClassName";
+
+
+    public function index($title = "@title")
+    {
+        $data = ["title" => $title,"sk_crud_js_path"=>include 'application/libraries/sk_generator_core_files/sk_js_crud.php'];
+        $this->load->view("@headerpagePath", $data);
+        $this->load->view("@viewpagePath");
+        $this->load->view("@footerpagePath");
+    }
+    public function  set_validation()
+    {
+        @genarate_validation
+    }
+
+    public function set_show_data($r)
+    {
+        
+        return  array(
+            @generate_show_data_feilds
+            "<a  style='color:white;' class='btn btn-danger delete_btn' id=" .  $r->id . ">حذف</a>",
+            "<a      style='color:white;'  class='btn btn-success update_btn' id=" . $r->id .  ">تعديل</a>",
+        );
+    }
+
+    public function set_insert_post()
+    {
+        // set data
+        $data = array(
+            @genarate_insert_feilds
+        );
+        return $data;
+    }
+    public function set_update_post()
+    {
+        $data = array(
+            "id" => $this->input->post("id"),
+
+            @genarate_update_feilds
+        );
+
+        return $data;
+    }
+}

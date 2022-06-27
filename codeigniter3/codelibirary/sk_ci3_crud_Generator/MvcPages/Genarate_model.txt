@@ -1,0 +1,15 @@
+<?php
+/**
+*  @generateTime
+*  class by sajjad kareem
+*/
+     defined('BASEPATH') or exit('No direct script access allowed');
+         include  'application/libraries/sk_generator_core_files/skCrudModel.php ';
+        class  @modelName extends skCrudModel
+         {
+            public function __construct(){
+            parent:: __construct(@table,  @idName, @controllerName, @updateFeilds,'تم الحذف بنجاح');
+       }
+      }
+
+      ?>

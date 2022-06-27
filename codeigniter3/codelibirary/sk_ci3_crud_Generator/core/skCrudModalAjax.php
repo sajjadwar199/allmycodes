@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 /**
+ *  controller auto genarate by sk_ci3_crud_generator
  *    create crud with modalBootstrap and ajax
  * @package skLibiraris
  * @author sajjadkareem 

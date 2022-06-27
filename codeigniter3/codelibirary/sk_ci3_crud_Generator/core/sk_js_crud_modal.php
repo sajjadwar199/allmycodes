@@ -1,7 +1,15 @@
- 
- 
+<!-- 
+ *  js auto genarate by sk_ci3_crud_generator
+ *    create crud with modalBootstrap and ajax
+ * @package skLibiraris
+ * @author sajjadkareem 
+ * @category modalAjaxCrud
+ * 
+ * 
+ *
+-->
+ <script>
  /* for  edit data */
-
 	/* for showing data   */
 	function serverSide_datatable(url, table_id, Buttons = [
 		'excel', 'print',
@@ -62,27 +70,18 @@
 		success: 'تم اضافة   بنجاح  ',
 		error: "!هناك خطأ لم تتم الأضافة"
 	}) {
-
 		$(document).ready(function() {
-
 			$('#' + btn_add_id).on('click', function() {
 				//validation
 				// if ($.trim(name).length  >=1) {
-
-
 				$("#" + btn_add_id).attr("disabled", "disabled");
-
-
 				var form = $('#insertfrm');
 				// console.log(form.serialize());
-
-
 				$.ajax({
 					url: insert_url,
 					type: "POST",
-
+		 
 					data: $("#insertform").serialize(),
-
 					cache: false,
 					success: function(dataResult) {
 						// if (dataResult.success != false) {
@@ -90,7 +89,6 @@
 						// 		(messages.success);
 						// } 
 						Command: toastr["success"](messages.success)
-
 						toastr.options = {
 							"closeButton": true,
 							"debug": false,
@@ -113,11 +111,9 @@
 						$('#insertform')[0].reset();
 						$("#" + btn_add_id).removeAttr("disabled");
 						var dataResult = JSON.parse(dataResult);
-
 					},
 					error: function(dataResult) {
 						Command: toastr["warning"](dataResult.responseText)
-
 						toastr.options = {
 							"closeButton": true,
 							"debug": false,
@@ -136,18 +132,8 @@
 							"hideMethod": "fadeOut"
 						}
 						$("#" + btn_add_id).removeAttr("disabled");
-
 					}
 				});
-
-
-
-
-
-
-
-
-
 				// }
 				//     else {
 				//         alert('Please fill all the field !');
@@ -166,6 +152,7 @@
 			$.ajax({
 				url: insert_url,
 				type: "POST",
+			 
 				data:$("#updateform").serialize(),
 				// {
 				// 	id: $('#' + edit_add_id).val()
@@ -173,7 +160,6 @@
 				cache: false,
 				success: function(dataResult) {
 					Command: toastr["success"](messages.success)
-
 					toastr.options = {
 						"closeButton": true,
 						"debug": false,
@@ -206,7 +192,6 @@
 				},
 				error: function(dataResult) {
 					Command: toastr["warning"](dataResult.responseText)
-
 					toastr.options = {
 						"closeButton": true,
 						"debug": false,
@@ -225,7 +210,6 @@
 						"hideMethod": "fadeOut"
 					}
 					$("#" + edit_add_id).removeAttr("disabled");
-
 				}
 			});
 			// }
@@ -252,7 +236,6 @@
 					success: function(data) {
 						// alert(messages.success);
 						Command: toastr["success"](messages.success)
-
 						toastr.options = {
 							"closeButton": true,
 							"debug": false,
@@ -275,7 +258,6 @@
 					},
 					error: function(dataResult) {
 						Command: toastr["error"](messages.error)
-
 						toastr.options = {
 							"closeButton": true,
 							"debug": false,
@@ -325,4 +307,4 @@
 			})
 		});
 	}
- 
+	 </script>

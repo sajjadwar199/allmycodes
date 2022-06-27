@@ -1,0 +1,146 @@
+ <!--
+*  @generateTime@
+*  generator  by sajjad kareem
+*/
+   -->
+ <div class="app-title">
+ 	<div>
+ 		<h1> <i class="fa fa-certificate" aria-hidden="true"></i>
+ 			@crudNameArabic@</h1>
+ 	</div>
+ 	<ul class="app-breadcrumb breadcrumb side">
+ 		<li class="breadcrumb-item">@crudNameArabic@</li>
+ 		<li class="breadcrumb-item active"><a href="#">تجهيز المواد </a></li>
+ 	</ul>
+ </div>
+ <div class="col-md-12 grid-margin stretch-card">
+ 	<div class="card">
+ 		<div class="card-body">
+ 			<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modelId">
+ 				أضافة
+ 				<i class="fa fa-plus-circle" aria-hidden="true"></i>
+ 			</button>
+ 			<br>
+ 			<br>
+ 			<!-- Button trigger modal -->
+ 			<!-- insert  Modal -->
+ 			<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+ 				<div class="modal-dialog" role="document">
+ 					<div class="modal-content">
+ 						<div class="modal-header">
+ 							<h5 class="modal-title" align="right"> أضافة </h5>
+ 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+ 								<span aria-hidden="true">&times;</span>
+ 							</button>
+ 						</div>
+ 						<div class="modal-body">
+ 							<div class="col-sm-12">
+ 								<div class="col-md-12">
+ 									<div class="form-group row">
+ 										<div class="col-sm-9">
+ 											<form id="insertform"  enctype="multipart/form-data">
+ 												<!-- ********************************* -->
+
+
+
+ 												<!-- put your insert form here-->
+
+
+
+
+ 												<!-- **************************** -->
+ 										</div>
+ 									</div>
+ 								</div>
+ 							</div>
+ 						</div>
+ 						<div class="modal-footer">
+ 							<button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+ 							<button type="button" class="btn btn-primary" id="save">حفظ</button>
+ 						</div>
+ 					</div>
+ 				</div>
+ 				</form>
+ 			</div>
+ 			<!-- edit modal  -->
+ 			<div class="modal fade" id="modal-edit-id" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+ 				<div class="modal-dialog" role="document">
+ 					<div class="modal-content">
+ 						<div class="modal-header">
+ 							<h5 class="modal-title" align="right"> تعديل </h5>
+ 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+ 								<span aria-hidden="true">&times;</span>
+ 							</button>
+ 						</div>
+ 						<div class="modal-body">
+ 							<div class="col-sm-12">
+ 								<div class="col-md-12">
+ 									<div class="form-group row">
+ 										<div class="col-sm-9">
+ 											<form id="updateform"  enctype="multipart/form-data">
+ 												<!--  very-importent input for edit id   -->
+ 												<input type="text" hidden id="idedit" value="" name="id" class="form-control">
+ 												<!--  very-importent input for edit id   -->
+ 												<!-- ********************************* -->
+
+
+
+
+
+
+
+ 												<!-- put your update form here-->
+
+
+
+
+
+
+
+
+ 												<!-- **************************** -->
+ 										</div>
+ 									</div>
+ 								</div>
+ 							</div>
+ 						</div>
+ 						<div class="modal-footer">
+ 							<button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
+ 							<button type="button" class="btn btn-info" id="edit">حفظ</button>
+ 						</div>
+ 					</div>
+ 				</div>
+ 				</form>
+ 			</div>
+ 			<div class="  row">
+ 				<div class=" table-responsive ">
+ 					<div class="row">
+ 						<div class="col-sm-12">
+ 							<table id="datatable_crud" class="table   " id="dataTable"  role="grid" aria-describedby="dataTable_info"  >
+ 								<thead>
+ 									<tr role="row">
+ 										@generate_table_cols_html@
+ 										<th> </th>
+ 										<th> </th>
+ 									</tr>
+ 								</thead>
+ 								<tfoot>
+ 								</tfoot>
+ 								<tbody>
+ 								</tbody>
+ 							</table>
+ 						</div>
+ 					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+ 	</div>
+ </div>
+ <script>
+ 	serverSide_datatable("@ControllerName@/list", "datatable_crud");
+ 	insertData("modelId", "@ControllerName@/insert", "save", "@ControllerName@/list", "datatable_crud");
+ 	deleteData("@ControllerName@/delete", "@ControllerName@/list", "datatable_crud");
+ 	updateData("modal-edit-id", "Categories/update", "edit", "@ControllerName@/list", "datatable_crud");
+		/*  for showing data after edit */
+ 	edit("@ControllerName@/edit", "modal-edit-id", "edit", @generate_js_edit_showing_form@);
+ </script>
