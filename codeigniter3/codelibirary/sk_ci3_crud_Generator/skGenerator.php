@@ -1,9 +1,33 @@
-<?php
 
+<?php
+ /* 
+ مثال للاستدعاء 
+ <?php
+include 'application/libraries/sk_ci3_crud_Generator/skGenerator.php';
+
+class MyGenerator extends  skGenerator
+{
+
+  public $table="categories";  
+  public $crudNameEnglish="new";
+  public $crudNameArabic="الاصناف ";
+  public $feilds=["name"=>"الاسم"];
+  public $validation=["name" => "required|string"];
+  public $title="  sajjad crud  generator ";
+  public $headerPagePath="template/header.php";  
+  public $footerPagePath="template/footer.php";  
+  public $idName="id";  
+ 
+ 
+}
+ 
+ 
+ */
 /**
  * Ganarator crud Pages     كلاس لتوليد صفحات  crud والكتابة بها
  * class by sajjad kareem 
  *@auther 
+
  */
 class  skGenerator  extends CI_Controller
 {
