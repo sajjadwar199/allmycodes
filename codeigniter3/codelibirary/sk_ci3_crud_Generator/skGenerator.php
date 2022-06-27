@@ -1,4 +1,4 @@
- 
+  
 <?php
  /* 
  مثال للاستدعاء 
@@ -315,17 +315,19 @@ class  skGenerator  extends CI_Controller
 
   public function generate_validation_controller($validation_data)
   {
-    $validation = " return array(
-          array(";
+    $validation = " return array(";
+        
     foreach ($validation_data as $key => $value) {
+      $validation.="array(" ;
+
       $validation .= "'field' =>" . "'$key'" . "," . "\n";
       $validation .= "'rules' =>"  . "'$value'" . "," . "\n";
 
       $validation .= "'errors' => array(
         'required' => 'الرجاء ملء حقل %s.',
-        ),";
+        ),)," ."\n";
     }
-    $validation .= "), );";
+    $validation .= " );";
 
     return $validation;
   }
