@@ -133,7 +133,6 @@ class  skGenerator  extends CI_Controller
       $Feildss_Arabic[] = $val;
     }
 
-    
     $this->view_data["@crudNameArabic@"] =$this->crudNameArabic;
     $this->view_data["@generate_table_cols_html@"] =$Feildss_Arabic;
     $this->view_data["@ControllerName@"] = $this->crudNameEnglish."Controller";
@@ -316,17 +315,20 @@ class  skGenerator  extends CI_Controller
   public function generate_validation_controller($validation_data)
   {
     $validation = " return array(";
-        
+  
     foreach ($validation_data as $key => $value) {
       $validation.="array(" ;
 
       $validation .= "'field' =>" . "'$key'" . "," . "\n";
       $validation .= "'rules' =>"  . "'$value'" . "," . "\n";
-
+         //جلب اسم الحقل بلعربي 
+         @$lable= $this->feilds["$key"] ;
+      $validation .= "'label' =>"  ."'$lable'". "," . "\n";
       $validation .= "'errors' => array(
         'required' => 'الرجاء ملء حقل %s.',
         ),)," ."\n";
     }
+   
     $validation .= " );";
 
     return $validation;
