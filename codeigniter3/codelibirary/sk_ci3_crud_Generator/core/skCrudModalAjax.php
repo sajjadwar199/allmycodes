@@ -89,6 +89,7 @@ class skCrudModalAjax  extends CI_Controller
         $this->load->model($this->ModelClassName, "ModelName");
         $this->load->library('form_validation');
          $this->load->helper('form');
+         $this->load->library("upload");
 
     }
   
@@ -225,4 +226,65 @@ class skCrudModalAjax  extends CI_Controller
         $data = $this->ModelName->get_data();
         json_encode($data);
     }
+
+
+
+
+
+ /**
+         * uploadfile  دالة لرفع الملفات من form
+         * 
+         * @param  mixed $post_input_name ex..  <input type="file" name="website_photo"/> =>  website_photo
+         * @param  mixed $upload_path    مسار رفع الملف 
+         * @param  mixed $allowtypes  الصيغ المسموحة
+         * @param  mixed $action   الحدث اذا كان للتعديل او الاضافة  ex.. insert ,update 
+         * @return void
+         */
+        public function uploadfile($action = "insert", $id = null, $post_input_name = "website_photo", $upload_path = "./uploads/websites_photos/", $allowtypes = 'gif|jpg|png|jpeg|',$error_message="هناك خطأ في رفع الصورة الرجاء التأكد من الملف أذا كان صورة وبلحجم المسموح")
+        {
+                //insert 
+                if ($action == 'insert') {
+                        print_r($_FILES);
+                        $config['upload_path']          = $upload_path;
+                        $config['allowed_types']        = $allowtypes;
+                        $config['encrypt_name']        = TRUE;
+                        $config['remove_spaces']        = TRUE;
+                        $this->upload->initialize($config);
+                        if (!$this->upload->do_upload($post_input_name)) {
+                                //في حالة وجود خطأ في رفع الملف
+                                $error = array('error' => $this->upload->display_errors());
+                                 echo $error;
+                                 echo $error_message;
+                                return false;
+                        } else {
+                                 return $this->upload->data('file_name');;
+                        }
+                } else if ($action == 'update') {
+                        //update 
+                        if (isset($_FILES) and $_FILES[$post_input_name]['name'] != '') {
+                                //اذا تم ارسال ملف 
+                                print_r($_FILES);
+                                $config['upload_path']          = $upload_path;
+                                $config['allowed_types']        = $allowtypes;
+                                $config['encrypt_name']        = TRUE;
+                                $config['remove_spaces']        = TRUE;
+                                $this->upload->initialize($config);
+                                if (!$this->upload->do_upload($post_input_name)) {
+                                        //في حالة وجود خطأ في رفع الملف
+                                        $error = array('error' => $this->upload->display_errors());
+                                        echo $error;
+                                        echo $error_message;
+                                } else {
+                                        print_r($this->upload->data());
+                                        return $this->upload->data('file_name');
+                                }
+                        } else {
+                                //اذا لم يرسل  ملف 
+                                echo $error_message;
+                                return false;
+                        }
+                }
+        }
+
+
 }
