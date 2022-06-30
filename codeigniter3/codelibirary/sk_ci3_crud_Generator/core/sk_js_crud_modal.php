@@ -37,8 +37,7 @@
 					type: 'GET',
 				},
 				dom: 'Blfrtip',
-				orderCellsTop: true,
-				fixedHeader: true,
+			 
 				initComplete: function () {
 					var api = this.api();
 					// For each column
