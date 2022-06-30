@@ -290,7 +290,7 @@ class  skGenerator  extends CI_Controller
   {
     $html_table_cols = "";
     foreach ($viewvalue as $valus) {
-      $html_table_cols .= "<td>" . $valus . "</td>";
+      $html_table_cols .= "<th>" . $valus . "</th>";
     }
 
     return  $html_table_cols;
