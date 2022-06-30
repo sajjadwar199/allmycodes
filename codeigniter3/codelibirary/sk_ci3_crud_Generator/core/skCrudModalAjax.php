@@ -104,13 +104,15 @@ class skCrudModalAjax  extends CI_Controller
         $data = $this->set_insert_post();
         //validation 
         $this->form_validation->set_rules($this->set_validation());
-        if ($this->form_validation->run() != false) {
+        if ($this->form_validation->run() != false and $data !=false  ) {
              // insert 
+                  
              $res = $this->ModelName->insert($data);
              if ($res) {
                  header('Content-Type: application/json');
                  echo json_encode(['status' => "success"]);
              } 
+           
          }else { 
              // http_response_code(412);
              header('Content-Type: application/json');
@@ -244,7 +246,7 @@ class skCrudModalAjax  extends CI_Controller
         {
                 //insert 
                 if ($action == 'insert') {
-                        print_r($_FILES);
+                        // print_r($_FILES);
                         $config['upload_path']          = $upload_path;
                         $config['allowed_types']        = $allowtypes;
                         $config['encrypt_name']        = TRUE;
@@ -253,8 +255,8 @@ class skCrudModalAjax  extends CI_Controller
                         if (!$this->upload->do_upload($post_input_name)) {
                                 //في حالة وجود خطأ في رفع الملف
                                 $error = array('error' => $this->upload->display_errors());
-                                 echo $error;
-                                 echo $error_message;
+                                  echo $error['error'];
+                                //  echo $error_message;
                                 return false;
                         } else {
                                  return $this->upload->data('file_name');;
@@ -263,7 +265,7 @@ class skCrudModalAjax  extends CI_Controller
                         //update 
                         if (isset($_FILES) and $_FILES[$post_input_name]['name'] != '') {
                                 //اذا تم ارسال ملف 
-                                print_r($_FILES);
+                                // print_r($_FILES);
                                 $config['upload_path']          = $upload_path;
                                 $config['allowed_types']        = $allowtypes;
                                 $config['encrypt_name']        = TRUE;
@@ -272,8 +274,9 @@ class skCrudModalAjax  extends CI_Controller
                                 if (!$this->upload->do_upload($post_input_name)) {
                                         //في حالة وجود خطأ في رفع الملف
                                         $error = array('error' => $this->upload->display_errors());
-                                        echo $error;
-                                        echo $error_message;
+                                        
+                                        echo $error['error'];
+                                        // echo $error_message;
                                 } else {
                                         print_r($this->upload->data());
                                         return $this->upload->data('file_name');
