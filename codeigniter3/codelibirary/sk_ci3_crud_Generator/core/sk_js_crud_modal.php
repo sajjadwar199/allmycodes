@@ -171,8 +171,8 @@
 							"showMethod": "fadeIn",
 							"hideMethod": "fadeOut"
 						}
-						$('#' + table_id).DataTable().destroy();
-						serverSide_datatable(showdata_url, table_id);
+						$('#' + table_id).DataTable().ajax.reload();
+						// serverSide_datatable(showdata_url, table_id);
 						$('#insertform')[0].reset();
 						$("#" + btn_add_id).removeAttr("disabled");
 						var dataResult = JSON.parse(dataResult);
@@ -244,8 +244,8 @@
 						"showMethod": "fadeIn",
 						"hideMethod": "fadeOut"
 					}
-					$('#' + table_id).DataTable().destroy();
-					serverSide_datatable(showdata_url, table_id);
+					$('#' + table_id).DataTable().ajax.reload();
+					// serverSide_datatable(showdata_url, table_id);
 					$('#updateform')[0].reset();
 					$('#' + edit_modal_id).modal('hide');
 					$("#" + edit_add_id).removeAttr("disabled");
@@ -320,8 +320,8 @@
 							"showMethod": "fadeIn",
 							"hideMethod": "fadeOut"
 						}
-						$('#' + table_id).DataTable().destroy();
-						serverSide_datatable(showdata_url, table_id);
+						$('#' + table_id).DataTable().ajax.reload();
+						// serverSide_datatable(showdata_url, table_id);
 					},
 					error: function (dataResult) {
 						Command: toastr["error"](messages.error)
