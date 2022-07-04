@@ -26,27 +26,31 @@ class @controllerName extends skCrudModalAjax
         
         return  array(
             @generate_show_data_feilds
-            "<a  style='color:white;' class='btn btn-danger delete_btn' id=" .  $r->id . ">حذف</a>",
-            "<a      style='color:white;'  class='btn btn-success update_btn' id=" . $r->id .  ">تعديل</a>",
+            "<a  style='color:white;' class='btn btn-danger delete_btn' id=" .  $r->@idName . ">حذف</a>",
+            "<a      style='color:white;'  class='btn btn-success update_btn' id=" . $r->@idName .  ">تعديل</a>",
         );
     }
 
     public function set_insert_post()
     {
+          
         // set data
-        $data = array(
-            @genarate_insert_feilds
-        );
-        return $data;
+             @genarate_insert_feilds
+     
+     
+     
     }
     public function set_update_post()
     {
-        $data = array(
-            "id" => $this->input->post("id"),
+            
 
+ 
             @genarate_update_feilds
-        );
+        
+ 
+    }
 
-        return $data;
+    public function set_deletes_files(){
+         @genarate_deletes_files
     }
 }

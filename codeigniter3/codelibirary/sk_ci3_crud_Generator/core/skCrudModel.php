@@ -116,6 +116,7 @@ class skCrudModel extends CI_Model
     */
    public function insert($data)
    {
+
       return $this->db->insert($this->table, $data);
    }
    //count data in db    
@@ -151,7 +152,8 @@ class skCrudModel extends CI_Model
     */
    public function delete($id)
    {
-      $this->db->where('id', $id);
+       
+      $this->db->where($this->idName, $id);
       $this->db->delete($this->table);
       $this->session->set_flashdata('success', $this->sucessMessageDelete);
       echo $this->session->flashdata('success');
@@ -171,16 +173,17 @@ class skCrudModel extends CI_Model
     * @param  mixed $data
     * @return void
     */
-   public function update($data)
-   {
-      $this->db->where($this->idName, $data[$this->idName]);
+    public function update($data)
+    {
+     
+      $this->db->where($this->idName,$data[$this->idName]);
       if ($this->setUpdateFeilds($data)) {
          $f = $this->db->update($this->table, $this->setUpdateFeilds($data));
       }
       if ($f) {
          return true;
       }
-   }
+    }
    //لتهيئة العناصر للأضافة    
    /**
     * setUpdateFeilds
@@ -198,4 +201,33 @@ class skCrudModel extends CI_Model
          return   $updateFelids;
       }
    }
+   /**
+    * delete_file   دالة لحذف الملفات
+    *   طريقة الاستدعاء    $model->delete_file('website_photo',$id,"./uploads/websites_photos/"); 
+    * @param  mixed $file_feild_name   اسم حقل الملف في قاعدة البيانات
+    * @param  mixed $id   الايدي في قاعدة البيانات 
+    * @param  mixed $idName اسم الايدي في قاعدة البيانات 
+    * @param  mixed $path_upload_folder موقع وجود الملف ex.. 
+    * @return void
+    */
+    public function delete_file($file_feild_name,$id,$path_upload_folder)
+    {
+       //get data form database   
+       $this->load->helper("file");
+       $query = $this->db->select($this->select)
+          ->where($this->idName, $id)
+          ->get($this->table);
+         $query->result();
+        foreach ( $query->result() as $q) {
+          $path = $q->$file_feild_name;
+       }
+       if(file_exists($path)){
+         if (unlink($path_upload_folder.$path)) {
+            return true;
+         } else {
+            return false;
+         }
+       }
+      
+    }
 }

@@ -12,10 +12,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class skCrudModalAjax  extends CI_Controller
 {
     public   $ModelClassName = "manageUsersModel";
-
     //لعمل فحص للمدخلات
-    public   function set_validation(){
-       return   array(
+    public   function set_validation()
+    {
+        return   array(
             array(
                 'field' => 'username',
                 'label' => 'أسم المستخدم ',
@@ -42,7 +42,6 @@ class skCrudModalAjax  extends CI_Controller
             )
         );
     }
-  
     //لعمل عرض البيانات 
     public function set_show_data($r)
     {
@@ -73,14 +72,12 @@ class skCrudModalAjax  extends CI_Controller
             "validity" => $this->input->post("validity")
         );
     }
-
     public function index()
     {
         // $this->load->view("dashbord_inc/header.php");
         // $this->load->view("pages/importExcel.php");
         // $this->load->view("dashbord_inc/footer.php");
     }
-
     /* setting end *******************************************8 */
     public function __construct()
     {
@@ -88,11 +85,9 @@ class skCrudModalAjax  extends CI_Controller
         // import model 
         $this->load->model($this->ModelClassName, "ModelName");
         $this->load->library('form_validation');
-         $this->load->helper('form');
-         $this->load->library("upload");
-
+        $this->load->helper('form');
+        $this->load->library("upload");
     }
-  
     /**
      * insert لأضافة البيانات 
      *
@@ -100,25 +95,39 @@ class skCrudModalAjax  extends CI_Controller
      */
     public function insert()
     {
-        // set data
         $data = $this->set_insert_post();
+
         //validation 
         $this->form_validation->set_rules($this->set_validation());
-        if ($this->form_validation->run() != false and $data !=false  ) {
-             // insert 
-                  
-             $res = $this->ModelName->insert($data);
-             if ($res) {
-                 header('Content-Type: application/json');
-                 echo json_encode(['status' => "success"]);
-             } 
-           
-         }else { 
-             // http_response_code(412);
-             header('Content-Type: application/json');
-             echo validation_errors();
-         //   echo json_encode(['status' => "error"]);
-         }
+        // set data
+
+        //do not send data false for upload file 
+        $flage = true;
+
+        if (isset($data) and !empty($data)) {
+
+
+
+            foreach ($data as $k => $v) {
+                if ($v == false) {
+                    $flage = false;
+                }
+            }
+        }
+
+        if ($this->form_validation->run() != false and $data != false and $flage != false) {
+            // insert 
+            $res = $this->ModelName->insert($data);
+            if ($res) {
+                header('Content-Type: application/json');
+                echo json_encode(['status' => "success"]);
+            }
+        } else {
+            // http_response_code(412);
+            header('Content-Type: application/json');
+            echo validation_errors();
+            //   echo json_encode(['status' => "error"]);
+        }
     }
     /**
      * edit    لعرض العنصر المراد تعديله
@@ -144,24 +153,44 @@ class skCrudModalAjax  extends CI_Controller
     {
         $data = $this->set_update_post();
         $this->form_validation->set_rules($this->set_validation());
+        //do not send data false for upload file 
+        $flage = true;
 
-        if ($this->form_validation->run() != false) {
+        if (isset($data) and !empty($data)) {
 
-        $res = $this->ModelName->update($data);
-        if ($res) {
-            header('Content-Type: application/json');
-            echo json_encode(['status' => "success"]);
+
+
+            foreach ($data as $k => $v) {
+                if ($v == false) {
+                    $flage = false;
+                }
+            }
         }
-        }else {
-        //     http_response_code(412);
-        //    header('Content-Type: application/json');
-        //    echo json_encode(['status' => "error"]);
-        header('Content-Type: application/json');
 
-        echo validation_errors();
-       }
+        if ($this->form_validation->run() != false and $flage != false) {
+
+            $res = $this->ModelName->update($data);
+            if ($res) {
+                header('Content-Type: application/json');
+                echo json_encode(['status' => "success"]);
+            }
+        } else {
+            //     http_response_code(412);
+            //    header('Content-Type: application/json');
+            //    echo json_encode(['status' => "error"]);
+            header('Content-Type: application/json');
+
+            echo validation_errors();
+        }
         // json_encode($res);
         // echo $this->input->post("id");
+
+    }
+    public function set_deletes_files()
+    {
+        /* example */
+        // $this->delete_file('idd','doctors','image');
+
     }
     /**
      * delete لحذف البيانات
@@ -172,16 +201,17 @@ class skCrudModalAjax  extends CI_Controller
     public function delete()
     {
         $id = $this->input->post("id");
+
+        $delete = $this->set_deletes_files();
+
         $delet = $this->ModelName->delete($id);
-        if($delet){
+        if ($delet) {
             header('Content-Type: application/json');
             echo json_encode(['status' => "success"]);
-        }else{
+        } else {
             http_response_code(412);
             header('Content-Type: application/json');
-
             echo json_encode(['status' => "error"]);
-
         }
     }
     /**
@@ -228,66 +258,110 @@ class skCrudModalAjax  extends CI_Controller
         $data = $this->ModelName->get_data();
         json_encode($data);
     }
+    /**
+     * uploadfile  دالة لرفع الملفات من form
+     * 
+     * @param  mixed $post_input_name ex..  <input type="file" name="website_photo"/> =>  website_photo
+     * @param  mixed $upload_path    مسار رفع الملف 
+     * @param  mixed $allowtypes  الصيغ المسموحة
+     * @param  mixed $action   الحدث اذا كان للتعديل او الاضافة  ex.. insert ,update 
+     * @return void
+     */
+    public function uploadfile($action = "insert", $id = null, $post_input_name = "website_photo", $upload_path = "./uploads/websites_photos/", $allowtypes = 'gif|jpg|png|jpeg|',$max_size=60000, $error_message = "هناك خطأ في رفع الصورة الرجاء التأكد من الملف أذا كان صورة وبلحجم المسموح")
+    {
 
+        //insert 
+        if ($action == 'insert') {
+            // print_r($_FILES);
+            $config['upload_path']          = $upload_path;
+            $config['allowed_types']        = $allowtypes;
+            $config['max_size']             = $max_size;
+            $config['encrypt_name']        = TRUE;
+            $config['remove_spaces']        = TRUE;
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload($post_input_name)) {
+                //في حالة وجود خطأ في رفع الملف
+                $error = array('error' => $this->upload->display_errors());
+                echo $error['error'];
+                //  echo $error_message;
+                return false;
+            } else {
 
+                return $upload_path.'/'.$this->upload->data('file_name');
+            }
+        } else if ($action == 'update') {
+            //update 
+            if ($_FILES[$post_input_name]['name'] != '') {
+                //اذا تم ارسال ملف 
+                // print_r($_FILES);
+                $config['upload_path']          = $upload_path;
+                $config['allowed_types']        = $allowtypes;
+                $config['max_size']             = $max_size;
+                $config['encrypt_name']        = TRUE;
+                $config['remove_spaces']        = TRUE;
+                $this->upload->initialize($config);
 
+                if (!$this->upload->do_upload($post_input_name)) {
+                    //في حالة وجود خطأ في رفع الملف
+                    $error = array('error' => $this->upload->display_errors());
+                    echo $error['error'];
+                    // echo $error_message;
 
-
- /**
-         * uploadfile  دالة لرفع الملفات من form
-         * 
-         * @param  mixed $post_input_name ex..  <input type="file" name="website_photo"/> =>  website_photo
-         * @param  mixed $upload_path    مسار رفع الملف 
-         * @param  mixed $allowtypes  الصيغ المسموحة
-         * @param  mixed $action   الحدث اذا كان للتعديل او الاضافة  ex.. insert ,update 
-         * @return void
-         */
-        public function uploadfile($action = "insert", $id = null, $post_input_name = "website_photo", $upload_path = "./uploads/websites_photos/", $allowtypes = 'gif|jpg|png|jpeg|',$error_message="هناك خطأ في رفع الصورة الرجاء التأكد من الملف أذا كان صورة وبلحجم المسموح")
-        {
-                //insert 
-                if ($action == 'insert') {
-                        // print_r($_FILES);
-                        $config['upload_path']          = $upload_path;
-                        $config['allowed_types']        = $allowtypes;
-                        $config['encrypt_name']        = TRUE;
-                        $config['remove_spaces']        = TRUE;
-                        $this->upload->initialize($config);
-                        if (!$this->upload->do_upload($post_input_name)) {
-                                //في حالة وجود خطأ في رفع الملف
-                                $error = array('error' => $this->upload->display_errors());
-                                  echo $error['error'];
-                                //  echo $error_message;
-                                return false;
-                        } else {
-                                 return $this->upload->data('file_name');;
-                        }
-                } else if ($action == 'update') {
-                        //update 
-                        if (isset($_FILES) and $_FILES[$post_input_name]['name'] != '') {
-                                //اذا تم ارسال ملف 
-                                // print_r($_FILES);
-                                $config['upload_path']          = $upload_path;
-                                $config['allowed_types']        = $allowtypes;
-                                $config['encrypt_name']        = TRUE;
-                                $config['remove_spaces']        = TRUE;
-                                $this->upload->initialize($config);
-                                if (!$this->upload->do_upload($post_input_name)) {
-                                        //في حالة وجود خطأ في رفع الملف
-                                        $error = array('error' => $this->upload->display_errors());
-                                        
-                                        echo $error['error'];
-                                        // echo $error_message;
-                                } else {
-                                        print_r($this->upload->data());
-                                        return $this->upload->data('file_name');
-                                }
-                        } else {
-                                //اذا لم يرسل  ملف 
-                                echo $error_message;
-                                return false;
-                        }
+                    return false;
+                } else {
+                    // print_r($this->upload->data());
+                    return $upload_path.'/'.$this->upload->data('file_name');
                 }
+            }
         }
+    }
 
+    public function update_file_upload($id_post_name, $id_databaseName, $tableName, $post_input_name, $upload_path, $allowtypes = "gif|jpg|png|jpeg|")
+    {
+        $file_path = $this->uploadfile('update', $id_post_name, $post_input_name, $upload_path, $allowtypes);
+        //اذا كانت الملف فارغأ لو لم يتم رفعه
+        if ($_FILES["$post_input_name"]['name'] == '') {
+            $q =  $this->db->where($id_databaseName, $this->input->post($id_databaseName))->get($tableName)->result();
+            foreach ($q as $old_url_file) {
+                $oldfile = $old_url_file->$post_input_name;
+            }
+            return  $image = $oldfile;
+        }
+        if ($file_path == false) {
+            //اذا لم يرفع ملف
 
+            return false;
+        } else {
+            $q =  $this->db->where($id_databaseName, $this->input->post($id_databaseName))->get($tableName)->result();
+            foreach ($q as $old_url_file) {
+                $oldfile = $old_url_file->$post_input_name;
+            }
+            if (file_exists($oldfile)) {
+                @unlink($oldfile);
+            }
+            return $image = $file_path;
+
+            //حذف الصورة القديمة 
+
+        }
+    }
+
+    public function delete_file($idName, $tableName, $file_input_name)
+    {
+        $this->load->helper("file");
+
+        $q =  $this->db->where($idName, $this->input->post("id"))->get($tableName)->result();
+        foreach ($q as $old_url_file) {
+            $old_path = $old_url_file->image;
+        }
+        if (file_exists($old_path)) {
+            if (@unlink($old_path)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
 }

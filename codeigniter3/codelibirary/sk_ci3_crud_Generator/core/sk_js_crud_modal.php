@@ -17,17 +17,18 @@
 	}
 	/* for  submit update form   */
 	function updateForm_submit(form_update_id = "updateform") {
-		$("#" + form_insert_id).submit();
+		$("#" + form_update_id).submit();
 	}
 	/* for showing data   */
 	function serverSide_datatable(url, table_id, Buttons = [
 		'excel', 'print',
 	], moreOptions = null) {
 		$(document).ready(function () {
-			$('#datatable_crud thead tr')
+	 
+			$('#datatable_crud tfoot tr')
 				.clone(true)
 				.addClass('filters')
-				.appendTo('#datatable_crud thead');
+				.appendTo('#datatable_crud tfoot');
 			$("#" + table_id).DataTable({
 				retrieve: true,
 				"processing": !0,
@@ -139,7 +140,7 @@
 				//validation
 				// if ($.trim(name).length  >=1) {
 				$("#" + btn_add_id).attr("disabled", "disabled");
-				var form = $('#insertfrm');
+				var form = formData;
 				// console.log(form.serialize());
 				$.ajax({
 					url: insert_url,
@@ -220,11 +221,13 @@
 			$.ajax({
 				url: insert_url,
 				type: "POST",
-				data: $("#updateform").serialize(),
+				data: formData,
 				// {
 				// 	id: $('#' + edit_add_id).val()
-				// },
-				cache: false,
+			 	// },
+				 cache: false,
+					contentType: false,
+					processData: false,
 				success: function (dataResult) {
 					Command: toastr["success"](messages.success)
 					toastr.options = {
