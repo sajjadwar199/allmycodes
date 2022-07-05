@@ -37,16 +37,16 @@
  							<div class="col-sm-12">
  								<div class="col-md-12">
  									<div class="form-group row">
- 										<div class="col-sm-9">
+ 										<div class="col-sm-12">
  											<form id="insertform"  enctype="multipart/form-data">
  												<!-- ********************************* -->
 
 
 
  												<!-- put your insert form here-->
-
-
-
+  <div class="form-row">
+                                                 @generate_insert_form
+</div>
 
  												<!-- **************************** -->
  										</div>
@@ -62,6 +62,66 @@
  				</div>
  				</form>
  			</div>
+
+
+
+	<!-- show details modal  -->
+	<div class="modal fade" id="modal-show-id" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+ 				<div class="modal-dialog modal-xl" role="document">
+ 					<div class="modal-content">
+ 						<div class="modal-header">
+ 							<h5 class="modal-title" align="right"> عرض التفاصيل </h5>
+ 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+ 								<span aria-hidden="true">&times;</span>
+ 							</button>
+ 						</div>
+ 						<div class="modal-body">
+ 							<div class="col-sm-12">
+ 								<div class="col-md-12">
+ 									<div class="form-group row">
+ 										<div class="col-sm-12">
+  												 
+
+
+ 
+ 								
+ 											<!-- ********************************* -->
+
+
+
+ 											<!-- put your showing details here-->
+
+ 								 	<table class="table  table-striped ">
+ 												<thead>
+
+ 												</thead>
+ 												<tbody>
+ 													@generate_showing_details
+ 													 
+ 												</tbody>
+ 											</table>
+ 
+
+
+ 												<!-- **************************** -->
+ 										</div>
+ 									</div>
+ 								</div>
+ 							</div>
+ 						</div>
+ 						<div class="modal-footer">
+ 						 
+ 						</div>
+ 					</div>
+ 				</div>
+  			</div>
+
+
+
+
+
+
+
  			<!-- edit modal  -->
  			<div class="modal fade" id="modal-edit-id" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
  				<div class="modal-dialog modal-xl" role="document">
@@ -76,7 +136,7 @@
  							<div class="col-sm-12">
  								<div class="col-md-12">
  									<div class="form-group row">
- 										<div class="col-sm-9">
+ 										<div class="col-sm-12">
  											<form id="updateform"  enctype="multipart/form-data">
  												<!--  very-importent input for edit id   -->
  												<input type="text" hidden id="idedit" value="" name="@idName" class="form-control">
@@ -91,9 +151,10 @@
 
  												<!-- put your update form here-->
 
+                                                    <div class="form-row">
+                                                     @generate_update_form
 
-
-
+                                                     </div>
 
 
 
@@ -116,12 +177,14 @@
  				<div class=" table-responsive ">
  					<div class="row">
  						<div class="col-sm-12">
- 							<table id="datatable_crud" class="table   " id="dataTable"  role="grid" aria-describedby="dataTable_info"  >
+ 							<table id="datatable_crud" class="table table-bordered  " id="dataTable"  role="grid" aria-describedby="dataTable_info"  >
  								<thead>
  									<tr>
  										@generate_table_cols_html@
  										<td> </td>
  										<td> </td>
+										<td> </td>
+ 									</tr>
  									</tr>
  								</thead>
  								 
@@ -129,7 +192,9 @@
  								</tbody>
 								 <tfoot>
 									<!-- filter search coulom here -->
+									
 								@generate_filter_search
+							 
  							</table>
  						</div>
  					</div>
@@ -145,5 +210,5 @@
  	updateData("modal-edit-id", "@ControllerName@/update", "edit", "@ControllerName@/list", "datatable_crud");
 		/*  for showing data after edit */
  	edit("@ControllerName@/edit", "modal-edit-id", "edit", @generate_js_edit_showing_form@);
-	 
+	 show('@ControllerName@/show','modal-show-id',@generate_js_showing_details@);
  </script>

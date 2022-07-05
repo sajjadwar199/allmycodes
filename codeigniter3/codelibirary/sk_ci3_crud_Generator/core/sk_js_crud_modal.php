@@ -377,4 +377,27 @@
 			})
 		});
 	}
+
+		/* for showing details  */
+		function show(show_url, modal_id,set_to_values_show) {
+		$(document).on('click', '.show_btn', function () {
+			var id = $(this).attr("id");
+			$.ajax({
+				url: show_url,
+				method: "POST",
+				data: {
+					id: id
+				},
+				dataType: "json",
+				cache: false,
+				success: function (dataResult) {
+					 
+					//to show values in inputs
+					set_to_values_show(dataResult);
+					$('#' + modal_id).modal('show');
+  					/* setting end */
+				}
+			})
+		});
+	}
 </script>

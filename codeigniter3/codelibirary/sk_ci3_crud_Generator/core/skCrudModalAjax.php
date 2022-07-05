@@ -96,9 +96,15 @@ class skCrudModalAjax  extends CI_Controller
     public function insert()
     {
         $data = $this->set_insert_post();
-
+             
         //validation 
         $this->form_validation->set_rules($this->set_validation());
+
+        if($data==true){
+            $validation=true;
+          }else{
+            $validation=$this->form_validation->run() ;
+          }
         // set data
 
         //do not send data false for upload file 
@@ -115,7 +121,7 @@ class skCrudModalAjax  extends CI_Controller
             }
         }
 
-        if ($this->form_validation->run() != false and $data != false and $flage != false) {
+        if (  $validation!=false and $data != false and $flage != false) {
             // insert 
             $res = $this->ModelName->insert($data);
             if ($res) {
@@ -153,6 +159,11 @@ class skCrudModalAjax  extends CI_Controller
     {
         $data = $this->set_update_post();
         $this->form_validation->set_rules($this->set_validation());
+        if($data==true){
+            $validation=true;
+          }else{
+            $validation=$this->form_validation->run() ;
+          }
         //do not send data false for upload file 
         $flage = true;
 
@@ -167,7 +178,7 @@ class skCrudModalAjax  extends CI_Controller
             }
         }
 
-        if ($this->form_validation->run() != false and $flage != false) {
+        if ($validation != false and $flage != false) {
 
             $res = $this->ModelName->update($data);
             if ($res) {
@@ -220,10 +231,12 @@ class skCrudModalAjax  extends CI_Controller
      * @param  mixed $id
      * @return void
      */
-    public function show($id)
+    public function show()
     {
+        $id = $this->input->post("id");
+
         $show =  $this->ModelName->get_where($id);
-        json_encode($show);
+      echo  json_encode($show);
     }
     public  function set_show_data_ajax()
     {

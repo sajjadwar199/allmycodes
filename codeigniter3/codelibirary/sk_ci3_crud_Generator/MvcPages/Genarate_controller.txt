@@ -28,6 +28,8 @@ class @controllerName extends skCrudModalAjax
             @generate_show_data_feilds
             "<a  style='color:white;' class='btn btn-danger delete_btn' id=" .  $r->@idName . ">حذف</a>",
             "<a      style='color:white;'  class='btn btn-success update_btn' id=" . $r->@idName .  ">تعديل</a>",
+            "<a      style='color:white;'  class='btn btn-primary show_btn' id=" . $r->@idName .  ">عرض</a>",
+
         );
     }
 
