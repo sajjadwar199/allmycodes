@@ -96,15 +96,11 @@ class skCrudModalAjax  extends CI_Controller
     public function insert()
     {
         $data = $this->set_insert_post();
-             
+
         //validation 
         $this->form_validation->set_rules($this->set_validation());
 
-        if($data==true){
-            $validation=true;
-          }else{
-            $validation=$this->form_validation->run() ;
-          }
+
         // set data
 
         //do not send data false for upload file 
@@ -120,8 +116,15 @@ class skCrudModalAjax  extends CI_Controller
                 }
             }
         }
+        if (is_array($this->set_validation())) {
+            $validation = $this->form_validation->run();
+        } else {
+            $validation = true;
+        }
 
-        if (  $validation!=false and $data != false and $flage != false) {
+
+        if ($validation != false and $data != false and $flage != false) {
+
             // insert 
             $res = $this->ModelName->insert($data);
             if ($res) {
@@ -159,11 +162,12 @@ class skCrudModalAjax  extends CI_Controller
     {
         $data = $this->set_update_post();
         $this->form_validation->set_rules($this->set_validation());
-        if($data==true){
-            $validation=true;
-          }else{
-            $validation=$this->form_validation->run() ;
-          }
+        if (is_array($this->set_validation())) {
+            $validation = $this->form_validation->run();
+        } else {
+            $validation = true;
+        }
+
         //do not send data false for upload file 
         $flage = true;
 
@@ -236,7 +240,7 @@ class skCrudModalAjax  extends CI_Controller
         $id = $this->input->post("id");
 
         $show =  $this->ModelName->get_where($id);
-      echo  json_encode($show);
+        echo  json_encode($show);
     }
     public  function set_show_data_ajax()
     {
@@ -280,7 +284,7 @@ class skCrudModalAjax  extends CI_Controller
      * @param  mixed $action   الحدث اذا كان للتعديل او الاضافة  ex.. insert ,update 
      * @return void
      */
-    public function uploadfile($action = "insert", $id = null, $post_input_name = "website_photo", $upload_path = "./uploads/websites_photos/", $allowtypes = 'gif|jpg|png|jpeg|',$max_size=60000, $error_message = "هناك خطأ في رفع الصورة الرجاء التأكد من الملف أذا كان صورة وبلحجم المسموح")
+    public function uploadfile($action = "insert", $id = null, $post_input_name = "website_photo", $upload_path = "./uploads/websites_photos/", $allowtypes = 'gif|jpg|png|jpeg|', $max_size = 60000, $error_message = "هناك خطأ في رفع الصورة الرجاء التأكد من الملف أذا كان صورة وبلحجم المسموح")
     {
 
         //insert 
@@ -300,7 +304,7 @@ class skCrudModalAjax  extends CI_Controller
                 return false;
             } else {
 
-                return $upload_path.'/'.$this->upload->data('file_name');
+                return $upload_path . '/' . $this->upload->data('file_name');
             }
         } else if ($action == 'update') {
             //update 
@@ -323,7 +327,7 @@ class skCrudModalAjax  extends CI_Controller
                     return false;
                 } else {
                     // print_r($this->upload->data());
-                    return $upload_path.'/'.$this->upload->data('file_name');
+                    return $upload_path . '/' . $this->upload->data('file_name');
                 }
             }
         }
