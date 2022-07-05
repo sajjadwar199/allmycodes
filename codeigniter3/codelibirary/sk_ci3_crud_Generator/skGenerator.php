@@ -1,4 +1,4 @@
- <?php
+<?php
   /* 
  مثال للاستدعاء 
  <?php
@@ -352,7 +352,7 @@ class MyCrudGenerator extends  skGenerator
           $showing_details .= "<tr>";
           $showing_details .= "
           <th>$lable</th>
-          <th ><img style='max-width:70px;max-height:70px;min-height:70px;min-width:70px;' src='' id='$key' class='img-thumbnail'> </th>
+          <th ><img style='max-width:100%;max-height:50%;min-height:50%;min-width:100%;' src='' id='$key' class='img-thumbnail'> </th>
           ";
 
           $showing_details .= "</tr>";
