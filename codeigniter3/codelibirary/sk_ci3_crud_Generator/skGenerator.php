@@ -61,20 +61,20 @@ class MyCrudGenerator extends  skGenerator
    */
   class  skGenerator  extends CI_Controller
   {
-    public $table = "doctors";
-    public $crudNameEnglish = "AdminDashbord_ManageDoctors";
-    public $crudNameArabic = "أدارة الأطباء ";
-    public $uploadFilePath = "application/uploads";
-    public $feilds = [
-      "username" => ["lable" => "اسم المستخدم", "type" => "text"],
-    ];
-    public $validation = [
-      "username" => "required|namaric",
-    ];
-    public $title = "أدارة معلومات الطبيب";
-    public $headerPagePath = "includes/dashbord_header.php";
-    public $footerPagePath = "includes/dashbord_footer.php";
-    public $idName = "id";
+    // public $table = "doctors";
+    // public $crudNameEnglish = "AdminDashbord_ManageDoctors";
+    // public $crudNameArabic = "أدارة الأطباء ";
+    // public $uploadFilePath = "application/uploads";
+    // public $feilds = [
+    //   "username" => ["lable" => "اسم المستخدم", "type" => "text"],
+    // ];
+    // public $validation = [
+    //   "username" => "required|namaric",
+    // ];
+    // public $title = "أدارة معلومات الطبيب";
+    // public $headerPagePath = "includes/dashbord_header.php";
+    // public $footerPagePath = "includes/dashbord_footer.php";
+    // public $idName = "id";
     public $model_data = [
       "@table",
       "@modelName",
@@ -874,7 +874,6 @@ class MyCrudGenerator extends  skGenerator
       return $inputHtml;
     }
    
-
     // (A) COPY ENTIRE FOLDER
 public   function copyfolder ($from, $to, $ext="*") {
   // (A1) SOURCE FOLDER CHECK

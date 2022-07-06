@@ -6,16 +6,14 @@
   
    ?>
  
- <div class="col-md-12 grid-margin stretch-card ">
- 	<div class="card">
- 		<div class="card-body">
-		 <div class="app-title">
- 	<div>
- 		<h3 align="center ">  
- 			أدارة الأطباء </h1>
+<div class="col-md-12 grid-margin stretch-card ">
+  
+ <div class="card">
+ 	<div class="card-header">
+ 		<h3 style="float:right;" class="card-title">أدارة الاطباء</h3>
  	</div>
- 	 
- </div>
+ 	<!-- /.card-header -->
+ 	<div class="card-body">
  			<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modelId">
  				أضافة
  				<i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -177,7 +175,7 @@
  				<div class=" table-responsive ">
  					<div class="row">
  						<div class="col-sm-12">
- 							<table id="datatable_crud" class="table table-bordered  " id="dataTable"  role="grid" aria-describedby="dataTable_info"  >
+ 							<table id="datatable_crud" class="table table-bordered table-striped dataTable  " id="dataTable"  role="grid" aria-describedby="dataTable_info"  >
  								<thead>
  									<tr>
  										@generate_table_cols_html@
