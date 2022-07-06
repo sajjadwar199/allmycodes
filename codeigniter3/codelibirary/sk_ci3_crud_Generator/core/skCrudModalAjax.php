@@ -381,4 +381,47 @@ class skCrudModalAjax  extends CI_Controller
             return true;
         }
     }
+    public  function dataTable_css_links()
+    {
+        $this->load->helper('html');
+        //datatable css 
+        echo '<!-- datatables css --> '."\n";
+        echo link_tag(base_url('assets/plugins/datatables/dataTables.bootstrap4.css'))."\n";
+        echo link_tag(base_url('assets/plugins/datatables/fixedHeader.bootstrap.min.css'))."\n";
+        echo  link_tag(base_url('assets/plugins/datatables/buttons.bootstrap.min.css'))."\n";
+        echo  link_tag(base_url('assets/plugins/datatables/jquery.dataTables.min.css'))."\n";
+        echo  link_tag(base_url('assets/plugins/datatables/responsive.bootstrap.min.css'))."\n";
+        echo  link_tag(base_url('assets/plugins/datatables/scroller.bootstrap.min.css'))."\n";
+        echo  link_tag(base_url('assets/plugins/toastr/toastr.css'));
+        $this->script_tag(base_url('assets/plugins/jquery/jquery.min.js'));
+    }
+
+    public function dataTable_js_links()
+    {
+
+        echo '<!-- datatables js --> ';
+        $this->script_tag(base_url('assets/plugins/datatables/jquery.dataTables.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/dataTables.bootstrap4.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/jquery.dataTables.min.js"'));
+        $this->script_tag(base_url('assets/plugins/datatables/dataTables.bootstrap.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/dataTables.buttons.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/buttons.bootstrap.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/jszip.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/pdfmake.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/vfs_fonts.jss'));
+        $this->script_tag(base_url('assets/plugins/datatables/buttons.html5.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/buttons.print.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/dataTables.fixedHeader.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/dataTables.keyTable.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/dataTables.responsive.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/responsive.bootstrap.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/dataTables.scroller.min.js'));
+        $this->script_tag(base_url('assets/plugins/datatables/dataTables.bootstrap4.js'));
+        $this->script_tag(base_url('assets/plugins/toastr/toastr.min.js'));
+    }
+
+    public function script_tag($src)
+    {
+        echo  "<script src='$src'></script>" . "\n";
+    }
 }

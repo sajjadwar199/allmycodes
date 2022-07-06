@@ -1,4 +1,4 @@
-<?php
+ <?php
   /* 
  مثال للاستدعاء 
  <?php
@@ -178,7 +178,13 @@ class MyCrudGenerator extends  skGenerator
       $this->view_data['@generate_js_showing_details@'] =  $Feildss;
 
       $this->generate_view($this->crudNameEnglish . "View", $this->view_data);
-    }
+      //الملفات الاساسية لل datatables links
+      
+       $projectName = explode('/', $_SERVER['REQUEST_URI'])[1];
+       echo '<h1  align="right" style="color:green">  :) تم توليد الكود بنجاح  </h1>';
+
+      $this->copyfolder(dirname(__FILE__).'/assets/','assets/');
+     }
     public function __construct()
     {
       parent::__construct();
@@ -352,7 +358,7 @@ class MyCrudGenerator extends  skGenerator
           $showing_details .= "<tr>";
           $showing_details .= "
           <th>$lable</th>
-          <th ><img style='max-width:100%;max-height:50%;min-height:50%;min-width:100%;' src='' id='$key' class='img-thumbnail'> </th>
+          <th ><img style='max-width:200px;max-height:200px;min-height:200px;min-width:200px;' src='' id='$key' class='img-thumbnail'> </th>
           ";
 
           $showing_details .= "</tr>";
@@ -867,4 +873,34 @@ class MyCrudGenerator extends  skGenerator
       }
       return $inputHtml;
     }
+   
+
+    // (A) COPY ENTIRE FOLDER
+public   function copyfolder ($from, $to, $ext="*") {
+  // (A1) SOURCE FOLDER CHECK
+  if (!is_dir($from)) { exit("$from does not exist"); }
+ 
+  // (A2) CREATE DESTINATION FOLDER
+  if (!is_dir($to)) {
+    if (!mkdir($to)) { exit("Failed to create $to"); };
+    echo "$to created\r\n";
+  }
+ 
+  // (A3) GET ALL FILES + FOLDERS IN SOURCE
+  $all = glob("$from$ext", GLOB_MARK);
+  print_r($all);
+ 
+  // (A4) COPY FILES + RECURSIVE INTERNAL FOLDERS
+  if (count($all)>0) { foreach ($all as $a) {
+    $ff = basename($a); // CURRENT FILE/FOLDER
+    if (is_dir($a)) {
+      $this->copyfolder("$from$ff/", "$to$ff/");
+    } else {
+      if (!copy($a, "$to$ff")) { exit("Error copying $a to $to$ff"); }
+      echo "$a copied to $to$ff\r\n";
+    }
+  }}
+}
+ 
+// (B) GO!
   };

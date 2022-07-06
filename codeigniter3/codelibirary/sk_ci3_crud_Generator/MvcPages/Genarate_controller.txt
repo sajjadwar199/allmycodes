@@ -11,10 +11,13 @@ class @controllerName extends skCrudModalAjax
 
     public function index($title = "@title")
     {
-        $data = ["title" => $title,"sk_crud_js_path"=>include 'application/libraries/sk_generator_core_files/sk_js_crud.php'];
-        $this->load->view("@headerpagePath", $data);
+         $data_header = ["title" => $title, 
+        "sk_crud_js_path" => include 'application/libraries/sk_generator_core_files/sk_js_crud.php',
+        "datatable_css_links"=>$this->dataTable_css_links(),];
+      $data_footer=[ "datatable_js_links"=>$this->dataTable_js_links()];
+        $this->load->view("@headerpagePath",$data_header);
         $this->load->view("@viewpagePath");
-        $this->load->view("@footerpagePath");
+        $this->load->view("@footerpagePath",$data_footer);
     }
     public function  set_validation()
     {
