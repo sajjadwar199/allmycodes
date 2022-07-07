@@ -1,0 +1,61 @@
+<?php
+/**
+*  @generateTime
+*  class by sajjad kareem
+*/
+include  'application/libraries/sk_generator_core_files/skCrudModalAjax.php ';
+class @controllerName extends skCrudModalAjax
+{
+    public   $ModelClassName = "@ModelClassName";
+
+
+    public function index($title = "@title")
+    {
+         $data_header = ["title" => $title, 
+        "sk_crud_js_path" => include 'application/libraries/sk_generator_core_files/sk_js_crud.php',
+        "datatable_css_links"=>$this->dataTable_css_links(),];
+      $data_footer=[ "datatable_js_links"=>$this->dataTable_js_links()];
+        $this->load->view("@headerpagePath",$data_header);
+        $this->load->view("@viewpagePath");
+        $this->load->view("@footerpagePath",$data_footer);
+    }
+    public function  set_validation()
+    {
+        @genarate_validation
+    }
+
+    public function set_show_data($r)
+    {
+        
+        return  array(
+            @generate_show_data_feilds
+            "<a  style='color:white;' class='btn btn-danger delete_btn' id=" .  $r->@idName . ">حذف</a>",
+            "<a      style='color:white;'  class='btn btn-success update_btn' id=" . $r->@idName .  ">تعديل</a>",
+            "<a      style='color:white;'  class='btn btn-primary show_btn' id=" . $r->@idName .  ">عرض</a>",
+
+        );
+    }
+
+    public function set_insert_post()
+    {
+          
+        // set data
+             @genarate_insert_feilds
+     
+     
+     
+    }
+    public function set_update_post()
+    {
+            
+
+ 
+            @genarate_update_feilds
+        
+ 
+    }
+
+    public function set_deletes_files(){
+         @genarate_deletes_files
+    }
+}
