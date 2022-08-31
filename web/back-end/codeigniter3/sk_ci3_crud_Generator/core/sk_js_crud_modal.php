@@ -1,5 +1,5 @@
 <?php
- /* 
+/* 
  *  js auto genarate by sk_ci3_crud_generator
  *    create crud with modalBootstrap and ajax
  * @package skLibiraris
@@ -23,8 +23,8 @@
 	function serverSide_datatable(url, table_id, Buttons = [
 		'excel', 'print',
 	], moreOptions = null) {
-		$(document).ready(function () {
-	 
+		$(document).ready(function() {
+
 			$('#datatable_crud tfoot tr')
 				.clone(true)
 				.addClass('filters')
@@ -38,14 +38,14 @@
 					type: 'GET',
 				},
 				dom: 'Blfrtip',
-			 
-				initComplete: function () {
+
+				initComplete: function() {
 					var api = this.api();
 					// For each column
 					api
 						.columns()
 						.eq(0)
-						.each(function (colIdx) {
+						.each(function(colIdx) {
 							// Set the header cell to contain the input element
 							var cell = $('.filters th').eq(
 								$(api.column(colIdx).header()).index()
@@ -58,7 +58,7 @@
 									$('.filters th').eq($(api.column(colIdx).header()).index())
 								)
 								.off('keyup change')
-								.on('change', function (e) {
+								.on('change', function(e) {
 									// Get the search value
 									$(this).attr('title', $(this).val());
 									var regexr =
@@ -77,7 +77,7 @@
 										)
 										.draw();
 								})
-								.on('keyup', function (e) {
+								.on('keyup', function(e) {
 									e.stopPropagation();
 									$(this).trigger('change');
 									$(this)
@@ -132,9 +132,9 @@
 		success: 'تم اضافة   بنجاح  ',
 		error: "!هناك خطأ لم تتم الأضافة"
 	}) {
-		$(document).ready(function () {
+		$(document).ready(function() {
 			// $('#' + btn_add_id).on('click', function() {
-			$('#insertform').on('submit', (function (e) {
+			$('#insertform').on('submit', (function(e) {
 				e.preventDefault();
 				var formData = new FormData(this);
 				//validation
@@ -149,7 +149,7 @@
 					cache: false,
 					contentType: false,
 					processData: false,
-					success: function (dataResult) {
+					success: function(dataResult) {
 						// if (dataResult.success != false) {
 						// 	alert
 						// 		(messages.success);
@@ -178,7 +178,7 @@
 						$("#" + btn_add_id).removeAttr("disabled");
 						var dataResult = JSON.parse(dataResult);
 					},
-					error: function (dataResult) {
+					error: function(dataResult) {
 						Command: toastr["warning"](dataResult.responseText)
 						toastr.options = {
 							"closeButton": true,
@@ -214,7 +214,7 @@
 	}) {
 		// $('#' + edit_add_id).on('click', function() {
 		// if (categoryName != "") {
-		$('#updateform').on('submit', (function (e) {
+		$('#updateform').on('submit', (function(e) {
 			e.preventDefault();
 			var formData = new FormData(this);
 			$("#" + edit_add_id).attr("disabled", "disabled");
@@ -224,11 +224,11 @@
 				data: formData,
 				// {
 				// 	id: $('#' + edit_add_id).val()
-			 	// },
-				 cache: false,
-					contentType: false,
-					processData: false,
-				success: function (dataResult) {
+				// },
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function(dataResult) {
 					Command: toastr["success"](messages.success)
 					toastr.options = {
 						"closeButton": true,
@@ -260,7 +260,7 @@
 							(messages.error);
 					}
 				},
-				error: function (dataResult) {
+				error: function(dataResult) {
 					Command: toastr["warning"](dataResult.responseText)
 					toastr.options = {
 						"closeButton": true,
@@ -294,7 +294,7 @@
 		error: "هناك خطأ لم يتم الحذف !",
 		confirmdelete: "هل أنت متأكد من الحذف"
 	}) {
-		$(document).on('click', '.delete_btn', function () {
+		$(document).on('click', '.delete_btn', function() {
 			var id = $(this).attr("id");
 			if (confirm(messages.confirmdelete)) {
 				$.ajax({
@@ -303,7 +303,7 @@
 					data: {
 						id: id
 					},
-					success: function (data) {
+					success: function(data) {
 						// alert(messages.success);
 						Command: toastr["success"](messages.success)
 						toastr.options = {
@@ -326,7 +326,7 @@
 						$('#' + table_id).DataTable().ajax.reload();
 						// serverSide_datatable(showdata_url, table_id);
 					},
-					error: function (dataResult) {
+					error: function(dataResult) {
 						Command: toastr["error"](messages.error)
 						toastr.options = {
 							"closeButton": true,
@@ -354,7 +354,7 @@
 	}
 	/* for edit  */
 	function edit(edit_url, modal_id, edit_save_btn_id, set_to_values_edit) {
-		$(document).on('click', '.update_btn', function () {
+		$(document).on('click', '.update_btn', function() {
 			var id = $(this).attr("id");
 			$.ajax({
 				url: edit_url,
@@ -364,7 +364,7 @@
 				},
 				dataType: "json",
 				cache: false,
-				success: function (dataResult) {
+				success: function(dataResult) {
 					/* setting st art */
 					$('#idedit').val(id);
 					//to show values in inputs
@@ -378,9 +378,9 @@
 		});
 	}
 
-		/* for showing details  */
-		function show(show_url, modal_id,set_to_values_show) {
-		$(document).on('click', '.show_btn', function () {
+	/* for showing details  */
+	function show(show_url, modal_id, set_to_values_show) {
+		$(document).on('click', '.show_btn', function() {
 			var id = $(this).attr("id");
 			$.ajax({
 				url: show_url,
@@ -390,12 +390,12 @@
 				},
 				dataType: "json",
 				cache: false,
-				success: function (dataResult) {
-					 
+				success: function(dataResult) {
+
 					//to show values in inputs
 					set_to_values_show(dataResult);
 					$('#' + modal_id).modal('show');
-  					/* setting end */
+					/* setting end */
 				}
 			})
 		});

@@ -703,7 +703,7 @@ class MyCrudGenerator extends  skGenerator
       return $update_form;
     }
     /* 
-     @param $data=array()
+@param$data=array()
      */
     public function generate_input_form($formtype = "insert", $type, $name, $lable, $data = null)
     {

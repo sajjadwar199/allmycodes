@@ -42,7 +42,7 @@ class importExcel extends CI_Controller
  */
 defined('BASEPATH') or exit('No direct script access allowed');
  use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class SkimportExcel    
 {
     //class by  sajjadkareem create at 2022/2/11 wt 11:58 pm
